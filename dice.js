@@ -4,6 +4,7 @@ OUTPUT = document.getElementById("output"), GENERATE_BTN = document.getElementBy
 var // global mutable variables.
 counter = 1, // starts at 1, incremented AFTER die object created.
 dice = []; // empty array, dice pushed to it as they are created.
+STATUS.innerHTML = '<span>welcome.</span>';
 var Die = /** @class */ (function () {
     function Die() {
         var _this = this;
