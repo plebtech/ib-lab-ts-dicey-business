@@ -22,3 +22,19 @@ body {
     font-size: 2em;
     cursor: pointer;
 }
+
+#instructions {
+    font-size: 1.2em;
+}
+
+#status {
+    display: flex;
+    justify-content: space-around;
+    min-height: 20px;
+    background-color: #333;
+}
+#status > span {
+    color: #fff;
+    font-size: 2em;
+}
+
