@@ -5,7 +5,7 @@
 body {
     max-width: 640px;
     margin: 1% auto;
-    boder: 1px solid #000;
+    border: 1px solid #000;
 }
 
 #controls {
@@ -38,3 +38,20 @@ body {
     font-size: 2em;
 }
 
+#container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    min-height: 100px;
+    background-color: #eee;
+    border: 1px solid #93a1a1;
+}
+
+.die {
+    display: flex;
+    cursor: pointer;
+}
+.die > span {
+    /* margin: auto; */
+    font-size: 10em;
+}
