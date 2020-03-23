@@ -11,4 +11,13 @@ let
     counter: number = 1,
     dice: number[] = [];
 
+const testingTS = () => {
+    console.log(CONTAINER);
+    console.log(dice);
+}
+
+testingTS();
+
+console.log("HAHA");
+
 console.log("Loaded.")
