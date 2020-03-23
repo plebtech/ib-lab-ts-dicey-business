@@ -1,11 +1,41 @@
-<!DOCTYPE html>
+<!DOCTYPE html />
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dicey business in typescript</title>
+    <link rel="stylesheet" href="dice.css" />
 </head>
+
 <body>
-    
+
+    <div id="controls">
+        <button>GENERATE DICE</button>
+        <button>ROLL DICE</button>
+        <button>SUM</button>
+    </div>
+
+    <div id="instructions">
+        <ul>
+            <li>'GENERATE DIE' creates and rolls one die with a random face value.</li>
+            <li>'ROLL DICE' rerolls (randomizes) all current dice.</li>
+            <li>'SUM' totals the face values of all current dice.</li>
+            <li>Left-clicking an individual die rerolls it.</li>
+            <li>Double-clicking / right-clicking a die removes it.</li>
+        </ul>
+    </div>
+
+    <div id="status">
+
+    </div>
+
+    <div id="output">
+
+    </div>
+
+    <script src="dice.js"></script>
+
 </body>
+
 </html>
