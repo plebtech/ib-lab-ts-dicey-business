@@ -1,0 +1,24 @@
+* {
+    font-family: monospace;
+}
+
+body {
+    max-width: 640px;
+    margin: 1% auto;
+    boder: 1px solid #000;
+}
+
+#controls {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    border: 1px solid #93a1a1;
+    background-color: #eee;
+}
+#controls > button {
+    margin: 2%;
+    padding: 1%;
+    background-color: #ccc;
+    font-size: 2em;
+    cursor: pointer;
+}
