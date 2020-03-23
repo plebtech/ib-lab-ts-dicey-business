@@ -1,3 +1,4 @@
+"use strict";
 console.log("Loading..");
 var // global constant variables.
 OUTPUT = document.getElementById("output"), GENERATE_BTN = document.getElementById("controls").querySelectorAll("button")[0], REROLL_BTN = document.getElementById("controls").querySelectorAll("button")[1], SUM_BTN = document.getElementById("controls").querySelectorAll("button")[2], STATUS = document.getElementById("status"), STR_REMOVE = "<span>selected die removed.</span>";
@@ -55,6 +56,7 @@ var Die = /** @class */ (function () {
             });
             return;
         };
+        this.value = 0;
         this.div = document.createElement('div'); // create div via DOM.
         this.div.classList.add('die'); // assign class to div.
         this.div.id = counter.toString(); // assign id to div (based on counter value);
@@ -140,7 +142,7 @@ var setFace = function (value) {
         case 6:
             return '\u2685';
     }
-    return;
+    return 'error';
 };
 // when die removed, reassign div ids based on # of dice left, set counter to # of dice.
 var reorderDice = function () {

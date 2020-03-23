@@ -1,11 +1,11 @@
 console.log("Loading..");
 
 const // global constant variables.
-    OUTPUT: HTMLElement = document.getElementById("output"),
-    GENERATE_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[0],
-    REROLL_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[1],
-    SUM_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[2],
-    STATUS: HTMLElement = document.getElementById("status"),
+    OUTPUT: HTMLElement = document.getElementById("output")!,
+    GENERATE_BTN: HTMLElement = document.getElementById("controls")!.querySelectorAll("button")[0],
+    REROLL_BTN: HTMLElement = document.getElementById("controls")!.querySelectorAll("button")[1],
+    SUM_BTN: HTMLElement = document.getElementById("controls")!.querySelectorAll("button")[2],
+    STATUS: HTMLElement = document.getElementById("status")!,
     STR_REMOVE: string = `<span>selected die removed.</span>`;
 
 let // global mutable variables.
@@ -16,9 +16,9 @@ STATUS.innerHTML = '<span>welcome.</span>';
 
 class Die {
     div: HTMLElement;
-    id: number;
     value: number;
     constructor() {
+        this.value = 0;
         this.div = document.createElement('div'); // create div via DOM.
         this.div.classList.add('die'); // assign class to div.
         this.div.id = counter.toString(); // assign id to div (based on counter value);
@@ -148,7 +148,7 @@ const setFace = (value: number): string => {
         case 6:
             return '\u2685';
     }
-    return;
+    return 'error';
 }
 
 // when die removed, reassign div ids based on # of dice left, set counter to # of dice.
