@@ -1,6 +1,6 @@
 console.log("Loading..");
 var // global constant variables.
-CONTAINER = document.getElementById("container"), GENERATE_BTN = document.getElementById("controls").querySelectorAll("button")[0], REROLL_BTN = document.getElementById("controls").querySelectorAll("button")[0], SUM_BTN = document.getElementById("controls").querySelectorAll("button")[0], STATUS = document.getElementById("status"), STR_REMOVE = "<span>selected die removed.</span>";
+OUTPUT = document.getElementById("output"), GENERATE_BTN = document.getElementById("controls").querySelectorAll("button")[0], REROLL_BTN = document.getElementById("controls").querySelectorAll("button")[1], SUM_BTN = document.getElementById("controls").querySelectorAll("button")[2], STATUS = document.getElementById("status"), STR_REMOVE = "<span>selected die removed.</span>";
 var // global mutable variables.
 counter = 1, // starts at 1, incremented AFTER die object created.
 dice = []; // empty array, dice pushed to it as they are created.
@@ -19,12 +19,16 @@ var Die = /** @class */ (function () {
                 }
                 _this.roll();
             }, 100);
+            return;
         };
         // call function to generate random die value (1-6).
         this.roll = function (min, max) {
             if (min === void 0) { min = 1; }
             if (max === void 0) { max = 6; }
             var r = randomDieVal(min, max);
+            _this.value = r;
+            _this.div.innerHTML = '<span>' + setFace(_this.value) + '</span>';
+            return;
         };
         // listeners for each die (click, double/right).
         this.listen = function () {
@@ -32,24 +36,28 @@ var Die = /** @class */ (function () {
             _this.div.addEventListener('click', function () {
                 _this.animate();
                 STATUS.innerHTML = "<span>selected die rerolled.</span>";
+                return;
             });
             _this.div.addEventListener('dblclick', function () {
                 _this.div.remove();
                 dice.splice(rIndex, 1);
                 reorderDice();
                 STATUS.innerHTML = STR_REMOVE;
+                return;
             });
             _this.div.addEventListener('contextmenu', function () {
                 _this.div.remove();
                 dice.splice(rIndex, 1);
                 reorderDice();
                 STATUS.innerHTML = STR_REMOVE;
+                return;
             });
+            return;
         };
         this.div = document.createElement('div'); // create div via DOM.
         this.div.classList.add('die'); // assign class to div.
         this.div.id = counter.toString(); // assign id to div (based on counter value);
-        CONTAINER.appendChild(this.div);
+        OUTPUT.appendChild(this.div);
         this.animate();
         counter++;
         dice.push(this);
@@ -57,6 +65,45 @@ var Die = /** @class */ (function () {
     }
     return Die;
 }());
+// button listeners.
+GENERATE_BTN.addEventListener('click', function () {
+    new Die(); // instantiates Die class.
+    var noun = setNoun();
+    STATUS.innerHTML = "<span>number of " + noun + ": " + dice.length + ".</span>";
+    return;
+});
+REROLL_BTN.addEventListener('click', function () {
+    if (dice.length <= 0) {
+        noDice();
+    }
+    else {
+        dice.forEach(function (die) {
+            die.animate(1000);
+            var noun = setNoun();
+            STATUS.innerHTML = "<span>" + dice.length + " " + noun + " rerolled.</span>";
+        });
+    }
+    return;
+});
+SUM_BTN.addEventListener('click', function () {
+    if (dice.length <= 0) {
+        noDice();
+    }
+    else {
+        var sum_1 = 0;
+        var noun = setNoun();
+        dice.forEach(function (die) {
+            sum_1 += die.value;
+        });
+        STATUS.innerHTML = "<span>sum of " + noun + ": " + sum_1 + ".</span>";
+    }
+    return;
+});
+var noDice = function () {
+    STATUS.innerHTML = "<span>no dice.</span>";
+    return;
+};
+// set noun based on # of existing dice (single die vs multiple dice).
 var setNoun = function () {
     var n;
     if (dice.length === 1) {
@@ -64,6 +111,9 @@ var setNoun = function () {
     }
     else if (dice.length > 1) {
         n = 'dice';
+    }
+    else {
+        n = 'error';
     }
     return n;
 };
@@ -89,6 +139,7 @@ var setFace = function (value) {
         case 6:
             return '\u2685';
     }
+    return;
 };
 // when die removed, reassign div ids based on # of dice left, set counter to # of dice.
 var reorderDice = function () {
@@ -98,5 +149,6 @@ var reorderDice = function () {
         x++;
     });
     counter = dice.length;
+    return;
 };
 console.log("Loaded."); // if you see this, no errors.

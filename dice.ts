@@ -1,10 +1,10 @@
 console.log("Loading..");
 
 const // global constant variables.
-    CONTAINER: HTMLElement = document.getElementById("container"),
+    OUTPUT: HTMLElement = document.getElementById("output"),
     GENERATE_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[0],
-    REROLL_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[0],
-    SUM_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[0],
+    REROLL_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[1],
+    SUM_BTN: HTMLElement = document.getElementById("controls").querySelectorAll("button")[2],
     STATUS: HTMLElement = document.getElementById("status"),
     STR_REMOVE: string = `<span>selected die removed.</span>`;
 
@@ -20,7 +20,7 @@ class Die {
         this.div = document.createElement('div'); // create div via DOM.
         this.div.classList.add('die'); // assign class to div.
         this.div.id = counter.toString(); // assign id to div (based on counter value);
-        CONTAINER.appendChild(this.div);
+        OUTPUT.appendChild(this.div);
         this.animate();
         counter++;
         dice.push(this);
@@ -29,7 +29,7 @@ class Die {
     // 'rolls' dice for one second before settling on final value.
     animate = (limit: number = 1000): void => {
         let start: number = Date.now();
-        const timer = setInterval(() => {
+        const timer = setInterval((): void => {
             let timePassed: number = Date.now() - start;
             if (timePassed >= limit) {
                 clearInterval(timer);
@@ -37,10 +37,14 @@ class Die {
             }
             this.roll();
         }, 100);
+        return;
     }
     // call function to generate random die value (1-6).
     roll = (min: number = 1, max: number = 6): void => {
         let r: number = randomDieVal(min, max);
+        this.value = r;
+        this.div.innerHTML = '<span>' + setFace(this.value) + '</span>';
+        return;
     }
     // listeners for each die (click, double/right).
     listen = (): void => {
@@ -48,28 +52,73 @@ class Die {
         this.div.addEventListener('click', (): void => {
             this.animate();
             STATUS.innerHTML = `<span>selected die rerolled.</span>`;
+            return;
         });
         this.div.addEventListener('dblclick', (): void => {
             this.div.remove();
             dice.splice(rIndex, 1);
             reorderDice();
             STATUS.innerHTML = STR_REMOVE;
+            return;
         });
         this.div.addEventListener('contextmenu', (): void => {
             this.div.remove();
             dice.splice(rIndex, 1);
             reorderDice();
             STATUS.innerHTML = STR_REMOVE;
-        })
+            return;
+        });
+        return;
     }
 }
 
+// button listeners.
+GENERATE_BTN.addEventListener('click', (): void => {
+    new Die(); // instantiates Die class.
+    let noun: string = setNoun();
+    STATUS.innerHTML = `<span>number of ${noun}: ${dice.length}.</span>`;
+    return;
+});
+REROLL_BTN.addEventListener('click', (): void => {
+    if (dice.length <= 0) {
+        noDice();
+    } else {
+        dice.forEach(die => {
+            die.animate(1000);
+            let noun: string = setNoun();
+            STATUS.innerHTML = `<span>${dice.length} ${noun} rerolled.</span>`;
+        });
+    }
+    return;
+});
+SUM_BTN.addEventListener('click', (): void => {
+    if (dice.length <= 0) {
+        noDice();
+    } else {
+        let sum: number = 0;
+        let noun: string = setNoun();
+        dice.forEach(die => {
+            sum += die.value;
+        });
+        STATUS.innerHTML = `<span>sum of ${noun}: ${sum}.</span>`;
+    }
+    return;
+});
+
+const noDice = (): void => {
+    STATUS.innerHTML = `<span>no dice.</span>`;
+    return;
+}
+
+// set noun based on # of existing dice (single die vs multiple dice).
 const setNoun = (): string => {
     let n: string;
     if (dice.length === 1) {
         n = 'die';
     } else if (dice.length > 1) {
         n = 'dice';
+    } else {
+        n = 'error';
     }
     return n;
 }
@@ -97,6 +146,7 @@ const setFace = (value: number): string => {
         case 6:
             return '\u2685';
     }
+    return;
 }
 
 // when die removed, reassign div ids based on # of dice left, set counter to # of dice.
@@ -107,6 +157,7 @@ const reorderDice = (): void => {
         x++;
     });
     counter = dice.length;
+    return;
 }
 
 console.log("Loaded."); // if you see this, no errors.
