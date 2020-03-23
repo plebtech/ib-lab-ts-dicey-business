@@ -1,0 +1,23 @@
+{
+  "name": "lab-ts-dicey-business",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plebtech/ib-lab-ts-dicey-business.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/plebtech/ib-lab-ts-dicey-business/issues"
+  },
+  "homepage": "https://github.com/plebtech/ib-lab-ts-dicey-business#readme",
+  "dependencies": {
+    "typescript": "^3.8.3"
+  }
+}
