@@ -12,8 +12,6 @@ let // global mutable variables.
     counter: number = 1, // starts at 1, incremented AFTER die object created.
     dice: Die[] = []; // empty array, dice pushed to it as they are created.
 
-STATUS.innerHTML = '<span>welcome.</span>';
-
 class Die {
     div: HTMLElement;
     value: number;
