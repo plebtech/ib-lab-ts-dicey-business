@@ -1,7 +1,7 @@
 "use strict";
 console.log("Loading..");
 var // global constant variables.
-OUTPUT = document.getElementById("output"), GENERATE_BTN = document.getElementById("controls").querySelectorAll("button")[0], REROLL_BTN = document.getElementById("controls").querySelectorAll("button")[1], SUM_BTN = document.getElementById("controls").querySelectorAll("button")[2], STATUS = document.getElementById("status"), STR_REMOVE = "<span>selected die removed.</span>";
+OUTPUT = document.getElementById("output"), BTNS = document.getElementById("controls").querySelectorAll("button"), GENERATE_BTN = BTNS[0], REROLL_BTN = BTNS[1], SUM_BTN = BTNS[2], CLEAR_BTN = BTNS[3], STATUS = document.getElementById("status"), STR_REMOVE = "<span>selected die removed.</span>";
 var // global mutable variables.
 counter = 1, // starts at 1, incremented AFTER die object created.
 dice = []; // empty array, dice pushed to it as they are created.
@@ -100,6 +100,11 @@ SUM_BTN.addEventListener('click', function () {
         STATUS.innerHTML = "<span>sum of " + noun + ": " + sum_1 + ".</span>";
     }
     return;
+});
+CLEAR_BTN.addEventListener('click', function () {
+    dice = [];
+    OUTPUT.innerHTML = '';
+    counter = 1;
 });
 var noDice = function () {
     STATUS.innerHTML = "<span>no dice.</span>";

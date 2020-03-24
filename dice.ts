@@ -2,9 +2,11 @@ console.log("Loading..");
 
 const // global constant variables.
     OUTPUT: HTMLElement = document.getElementById("output")!,
-    GENERATE_BTN: HTMLElement = document.getElementById("controls")!.querySelectorAll("button")[0],
-    REROLL_BTN: HTMLElement = document.getElementById("controls")!.querySelectorAll("button")[1],
-    SUM_BTN: HTMLElement = document.getElementById("controls")!.querySelectorAll("button")[2],
+    BTNS: NodeListOf<HTMLButtonElement> = document.getElementById("controls")!.querySelectorAll("button"),
+    GENERATE_BTN: HTMLButtonElement = BTNS[0],
+    REROLL_BTN: HTMLButtonElement = BTNS[1],
+    SUM_BTN: HTMLButtonElement = BTNS[2],
+    CLEAR_BTN: HTMLButtonElement = BTNS[3],
     STATUS: HTMLElement = document.getElementById("status")!,
     STR_REMOVE: string = `<span>selected die removed.</span>`;
 
@@ -103,6 +105,11 @@ SUM_BTN.addEventListener('click', (): void => {
         STATUS.innerHTML = `<span>sum of ${noun}: ${sum}.</span>`;
     }
     return;
+});
+CLEAR_BTN.addEventListener('click', () => {
+    dice = [];
+    OUTPUT.innerHTML = '';
+    counter = 1;
 });
 
 const noDice = (): void => {
