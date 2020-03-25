@@ -1,1 +1,1 @@
-# project live at [http://rekt.undo.it](http://rekt.undo.it){:target="_blank"}
+# project live at [http://rekt.undo.it](http://rekt.undo.it)
