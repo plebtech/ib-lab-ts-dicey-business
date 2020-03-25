@@ -1,14 +1,14 @@
 console.log("Loading..");
 
 const // global constant variables.
-    OUTPUT: HTMLElement = document.getElementById("output")!,
-    BTNS: NodeListOf<HTMLButtonElement> = document.getElementById("controls")!.querySelectorAll("button"),
-    GENERATE_BTN: HTMLButtonElement = BTNS[0],
-    REROLL_BTN: HTMLButtonElement = BTNS[1],
-    SUM_BTN: HTMLButtonElement = BTNS[2],
-    CLEAR_BTN: HTMLButtonElement = BTNS[3],
-    STATUS: HTMLElement = document.getElementById("status")!,
-    STR_REMOVE: string = `<span>selected die removed.</span>`;
+    output: HTMLElement = document.getElementById("output")!,
+    btns: NodeListOf<HTMLButtonElement> = document.getElementById("controls")!.querySelectorAll("button"),
+    generateBtn: HTMLButtonElement = btns[0],
+    rerollBtn: HTMLButtonElement = btns[1],
+    sumBtn: HTMLButtonElement = btns[2],
+    clearBtn: HTMLButtonElement = btns[3],
+    statusDiv: HTMLElement = document.getElementById("status")!,
+    strRemove: string = `<span>selected die removed.</span>`;
 
 let // global mutable variables.
     counter: number = 1, // starts at 1, incremented AFTER die object created.
@@ -22,7 +22,7 @@ class Die {
         this.div = document.createElement('div'); // create div via DOM.
         this.div.classList.add('die'); // assign class to div.
         this.div.id = counter.toString(); // assign id to div (based on counter value);
-        OUTPUT.appendChild(this.div);
+        output.appendChild(this.div);
         this.animate();
         counter++;
         dice.push(this);
@@ -53,21 +53,21 @@ class Die {
         let rIndex: number = dice.indexOf(this);
         this.div.addEventListener('click', (): void => {
             this.animate();
-            STATUS.innerHTML = `<span>selected die rerolled.</span>`;
+            statusDiv.innerHTML = `<span>selected die rerolled.</span>`;
             return;
         });
         this.div.addEventListener('dblclick', (): void => {
             this.div.remove();
             dice.splice(rIndex, 1);
             reorderDice();
-            STATUS.innerHTML = STR_REMOVE;
+            statusDiv.innerHTML = strRemove;
             return;
         });
         this.div.addEventListener('contextmenu', (): void => {
             this.div.remove();
             dice.splice(rIndex, 1);
             reorderDice();
-            STATUS.innerHTML = STR_REMOVE;
+            statusDiv.innerHTML = strRemove;
             return;
         });
         return;
@@ -75,25 +75,25 @@ class Die {
 }
 
 // button listeners.
-GENERATE_BTN.addEventListener('click', (): void => {
+generateBtn.addEventListener('click', (): void => {
     new Die(); // instantiates Die class.
     let noun: string = setNoun();
-    STATUS.innerHTML = `<span>number of ${noun}: ${dice.length}.</span>`;
+    statusDiv.innerHTML = `<span>number of ${noun}: ${dice.length}.</span>`;
     return;
 });
-REROLL_BTN.addEventListener('click', (): void => {
+rerollBtn.addEventListener('click', (): void => {
     if (dice.length <= 0) {
         noDice();
     } else {
         dice.forEach(die => {
             die.animate(1000);
             let noun: string = setNoun();
-            STATUS.innerHTML = `<span>${dice.length} ${noun} rerolled.</span>`;
+            statusDiv.innerHTML = `<span>${dice.length} ${noun} rerolled.</span>`;
         });
     }
     return;
 });
-SUM_BTN.addEventListener('click', (): void => {
+sumBtn.addEventListener('click', (): void => {
     if (dice.length <= 0) {
         noDice();
     } else {
@@ -102,18 +102,18 @@ SUM_BTN.addEventListener('click', (): void => {
         dice.forEach(die => {
             sum += die.value;
         });
-        STATUS.innerHTML = `<span>sum of ${noun}: ${sum}.</span>`;
+        statusDiv.innerHTML = `<span>sum of ${noun}: ${sum}.</span>`;
     }
     return;
 });
-CLEAR_BTN.addEventListener('click', () => {
+clearBtn.addEventListener('click', () => {
     dice = [];
-    OUTPUT.innerHTML = '';
+    output.innerHTML = '';
     counter = 1;
 });
 
 const noDice = (): void => {
-    STATUS.innerHTML = `<span>no dice.</span>`;
+    statusDiv.innerHTML = `<span>no dice.</span>`;
     return;
 }
 

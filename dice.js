@@ -1,7 +1,7 @@
 "use strict";
 console.log("Loading..");
 var // global constant variables.
-OUTPUT = document.getElementById("output"), BTNS = document.getElementById("controls").querySelectorAll("button"), GENERATE_BTN = BTNS[0], REROLL_BTN = BTNS[1], SUM_BTN = BTNS[2], CLEAR_BTN = BTNS[3], STATUS = document.getElementById("status"), STR_REMOVE = "<span>selected die removed.</span>";
+output = document.getElementById("output"), btns = document.getElementById("controls").querySelectorAll("button"), generateBtn = btns[0], rerollBtn = btns[1], sumBtn = btns[2], clearBtn = btns[3], statusDiv = document.getElementById("status"), strRemove = "<span>selected die removed.</span>";
 var // global mutable variables.
 counter = 1, // starts at 1, incremented AFTER die object created.
 dice = []; // empty array, dice pushed to it as they are created.
@@ -36,21 +36,21 @@ var Die = /** @class */ (function () {
             var rIndex = dice.indexOf(_this);
             _this.div.addEventListener('click', function () {
                 _this.animate();
-                STATUS.innerHTML = "<span>selected die rerolled.</span>";
+                statusDiv.innerHTML = "<span>selected die rerolled.</span>";
                 return;
             });
             _this.div.addEventListener('dblclick', function () {
                 _this.div.remove();
                 dice.splice(rIndex, 1);
                 reorderDice();
-                STATUS.innerHTML = STR_REMOVE;
+                statusDiv.innerHTML = strRemove;
                 return;
             });
             _this.div.addEventListener('contextmenu', function () {
                 _this.div.remove();
                 dice.splice(rIndex, 1);
                 reorderDice();
-                STATUS.innerHTML = STR_REMOVE;
+                statusDiv.innerHTML = strRemove;
                 return;
             });
             return;
@@ -59,7 +59,7 @@ var Die = /** @class */ (function () {
         this.div = document.createElement('div'); // create div via DOM.
         this.div.classList.add('die'); // assign class to div.
         this.div.id = counter.toString(); // assign id to div (based on counter value);
-        OUTPUT.appendChild(this.div);
+        output.appendChild(this.div);
         this.animate();
         counter++;
         dice.push(this);
@@ -68,13 +68,13 @@ var Die = /** @class */ (function () {
     return Die;
 }());
 // button listeners.
-GENERATE_BTN.addEventListener('click', function () {
+generateBtn.addEventListener('click', function () {
     new Die(); // instantiates Die class.
     var noun = setNoun();
-    STATUS.innerHTML = "<span>number of " + noun + ": " + dice.length + ".</span>";
+    statusDiv.innerHTML = "<span>number of " + noun + ": " + dice.length + ".</span>";
     return;
 });
-REROLL_BTN.addEventListener('click', function () {
+rerollBtn.addEventListener('click', function () {
     if (dice.length <= 0) {
         noDice();
     }
@@ -82,12 +82,12 @@ REROLL_BTN.addEventListener('click', function () {
         dice.forEach(function (die) {
             die.animate(1000);
             var noun = setNoun();
-            STATUS.innerHTML = "<span>" + dice.length + " " + noun + " rerolled.</span>";
+            statusDiv.innerHTML = "<span>" + dice.length + " " + noun + " rerolled.</span>";
         });
     }
     return;
 });
-SUM_BTN.addEventListener('click', function () {
+sumBtn.addEventListener('click', function () {
     if (dice.length <= 0) {
         noDice();
     }
@@ -97,17 +97,17 @@ SUM_BTN.addEventListener('click', function () {
         dice.forEach(function (die) {
             sum_1 += die.value;
         });
-        STATUS.innerHTML = "<span>sum of " + noun + ": " + sum_1 + ".</span>";
+        statusDiv.innerHTML = "<span>sum of " + noun + ": " + sum_1 + ".</span>";
     }
     return;
 });
-CLEAR_BTN.addEventListener('click', function () {
+clearBtn.addEventListener('click', function () {
     dice = [];
-    OUTPUT.innerHTML = '';
+    output.innerHTML = '';
     counter = 1;
 });
 var noDice = function () {
-    STATUS.innerHTML = "<span>no dice.</span>";
+    statusDiv.innerHTML = "<span>no dice.</span>";
     return;
 };
 // set noun based on # of existing dice (single die vs multiple dice).
